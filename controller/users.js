@@ -109,7 +109,7 @@ const signUpWithEmail = async (req, res) => {
     const newUsers = new Users({
         email: userEmail,
         password: password,
-        type: 0,
+        type: 1,
         isActive: false,
     })
 
@@ -133,9 +133,9 @@ const signUpWithGoogle = async(req, res) => {
 
     const newUsers = new Users({
         email: email,
-        password: '123456',
+        password: 'user123123',
         isGoogle: true,
-        type: 0,
+        type: 1,
         isActive: false,
     })
 
@@ -160,9 +160,9 @@ const signUpWithFacebook = async(req, res) => {
     const newUsers = new Users({
         userName: name,
         email: email,
-        password: '123456',
+        password: 'user123123',
         isFacebook: true,
-        type: 0,
+        type: 1,
         isActive: false,
     })
 
