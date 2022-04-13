@@ -34,19 +34,52 @@ const getCollections = async (req, res) => {
     });
 }
 
+const getAllCollectionByUserId = async (req, res) => {
+    const { id } = req.query;
+
+    Collection.find({})
+    .populate('author')
+    .exec(function(err, result) {
+        if(err){
+            res.status(404).json({message: 'something went wrong'});
+        }else{
+
+            const resTmp = result.filter(item => {
+                return (item?.author?._id)?.toString() == id.toString();
+            })
+            res.status(200).json(resTmp);
+        }
+    });
+}
+
 const searchCollections = async (req, res) => {
     const { keyword } = req.query;
-    const searchResults = await Collection.find({collectionName:{$regex: keyword, $options: 'i'}});
-    if(searchResults){
-        return res.send({
-            searchResults: searchResults,
-        });
-    }else{
-        return res.send({
-            status: 'error',
-            searchResults: [],
-        });
-    }
+    await Collection.find({collectionName:{$regex: keyword, $options: 'i'}})
+    .populate('author')
+    .exec(function(err, result) {
+        if(err){
+            res.status(404).json({message: 'something went wrong'});
+        }else{
+            res.status(200).json(result)
+        }
+    });
+}
+
+const getCollectionByUserName = async (req, res) => {
+    const { keyword } = req.query;
+    await Collection.find({})
+    .populate('author')
+    .exec(function(err, result) {
+        if(err){
+            res.status(404).json({message: 'something went wrong'});
+        }else{
+            const resTmp = result.filter(item => {
+                const userName = item?.author?.userName;
+                return userName?.toLowerCase() == keyword.toLowerCase();
+            })
+            res.status(200).json(resTmp)
+        }
+    });
 }
 
 const getCollectionById = async (req, res) => {
@@ -152,11 +185,13 @@ const unSuspendByIds = async (req, res) => {
 
 module.exports = {
     getCollections,
+    getAllCollectionByUserId,
     getCollectionById,
     createNewCollection,
     deleteCollectionById,
     upDateCollection,
     searchCollections,
+    getCollectionByUserName,
     getActiveCollections,
     getSuspendedCollections,
     suspendByIds,

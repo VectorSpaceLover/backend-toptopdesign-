@@ -5,10 +5,12 @@ const mongoose = require('mongoose');
 const {
     createNewCollection,
     getCollections,
+    getAllCollectionByUserId,
     getCollectionById,
     deleteCollectionById,
     upDateCollection,
     searchCollections,
+    getCollectionByUserName,
     getActiveCollections,
     getSuspendedCollections,
     suspendByIds,
@@ -16,8 +18,10 @@ const {
 } = require('../controller/collection');
 
 router.get('/', getCollections);
+router.get('/user', getAllCollectionByUserId);
 router.get('/detail', getCollectionById);
 router.get('/search', searchCollections);
+router.get('/byuser', getCollectionByUserName);
 router.get('/active', getActiveCollections);
 router.get('/suspended', getSuspendedCollections);
 
