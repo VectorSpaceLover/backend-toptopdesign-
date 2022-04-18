@@ -50,6 +50,16 @@ const searchProducts = async (req, res) => {
     }
 }
 
+const getSearchResultsByCategory = async (req, res) => {
+    const { category } = req.query;
+    const searchResults = await Products.find({category:{$regex: category, $options: 'i'}});
+    if(searchResults){
+        res.status(200).json(searchResults);
+    }else{
+        res.status(404).json(searchResults);
+    }
+}
+
 const createNewProduct = async (req, res) => {
     const {
         productInfo,
@@ -294,6 +304,7 @@ const upDateProduct = async (req, res) => {
 module.exports = {
     getProducts,
     searchProducts,
+    getSearchResultsByCategory,
     createNewProduct,
     getProductById,
     getProductByName,

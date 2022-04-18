@@ -144,6 +144,28 @@ const upDateCustomerProfile = async (req, res) => {
     res.status(200).json(saveduser);
 }
 
+const upDateCustomerLevel = async (req, res) => {
+    const { id } = req.params;
+    const {
+        overView, products, users, collections
+    } = req.body;
+    
+    const user = await Users.findById(id);
+    if(!user){
+        return res.status(404).send({
+            message: `user with ID: ${id} does not exist in database.`,
+        });
+    }
+    user.updatedAt = Date.now();
+    user.overView = overView;
+    user.products = products;
+    user.users = users;
+    user.collections=collections;
+
+    const saveduser = await user.save();
+    res.status(200).json(saveduser);
+}
+
 const upDatePassword = async (req, res) => {
     const { id } = req.params;
     const {
@@ -288,6 +310,7 @@ module.exports = {
     upDateProfile,
     upDateAccountSetting,
     upDateCustomerProfile,
+    upDateCustomerLevel,
     upDatePassword,
     upDateSocialProfile,
     upDateEmailNotification,

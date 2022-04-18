@@ -75,7 +75,7 @@ const getCollectionByUserName = async (req, res) => {
         }else{
             const resTmp = result.filter(item => {
                 const userName = item?.author?.userName;
-                return userName?.toLowerCase() == keyword.toLowerCase();
+                return userName?.toLowerCase() == keyword.toLowerCase() || keyword.toLowerCase() === item.collectionName;
             })
             res.status(200).json(resTmp)
         }

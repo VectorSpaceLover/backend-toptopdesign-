@@ -65,6 +65,22 @@ const usersSchema = new mongoose.Schema({
     type: Array,
     required: false,
   },
+  overView:{
+    type: Boolean,
+    required: false,
+  },
+  products:{
+    type: Array,
+    required: false,
+  },
+  users:{
+    type: Array,
+    required: false,
+  },
+  collections:{
+    type: Array,
+    required: false,
+  },
   resetcode: {
     type: String,
     required: false,

@@ -11,7 +11,8 @@ const {
     createCustomer,
     deleteUser,
     createManager,
-    upDateCustomerProfile
+    upDateCustomerProfile,
+    upDateCustomerLevel
 } = require('../controller/admin/overview');
 
 router.post('/signup', adminSignUp);
@@ -22,6 +23,8 @@ router.post('/delete', deleteUser);
 
 router.put('/editprofile/:id', upDateProfile);
 router.put('/editcustomerprofile/:id', upDateCustomerProfile);
+router.put('/editcustomerlevel/:id', upDateCustomerLevel);
+
 router.put('/accountsetting/:id', upDateAccountSetting);
 router.put('/password/:id', upDatePassword);
 router.put('/social/:id', upDateSocialProfile);

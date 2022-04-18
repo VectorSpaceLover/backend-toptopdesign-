@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const {
     getProducts,
     searchProducts,
+    getSearchResultsByCategory,
     createNewProduct,
     getProductById,
     getProductByName,
@@ -26,6 +27,7 @@ const {
 router.get('/', getProducts);
 router.get('/detail', getProductById);
 router.get('/search', searchProducts);
+router.get('/category/search', getSearchResultsByCategory);
 router.get('/yearly', getYearlyProducts);
 router.get('/monthly', getMonthlyProducts);
 router.get('/daily', getDailyProducts);
