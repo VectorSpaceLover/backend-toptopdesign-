@@ -37,16 +37,11 @@ const storage = multer.diskStorage({
 
 const getUserInfoById = async (req, res) => {
     const { id } = req.query;
-    const user = await Users.find({_id: id});
+    const user = await Users.findById(id);
     if(user){
-        return res.send({
-            user: user,
-        });
+        res.status(200).json(user);
     }else{
-        return res.send({
-            status: 'error',
-            user: [],
-        });
+        res.status(404).json();
     }
 }
 
