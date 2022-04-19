@@ -268,7 +268,7 @@ const getProductById = async (req, res) => {
 
 const getProductsByName = async (req, res) => {
     const { keyword } = req.query;
-    const products = await Products.find({productName: keyword});
+    const products = await Products.find(({productName:{$regex: keyword, $options: 'i'}});
     if(products){
         res.status(200).json(products);
     }else{
@@ -280,7 +280,7 @@ const getProductByName = async (req, res) => {
     const {
         productName, 
     } = req.body;
-    const product = await Products.find({productName: productName});
+    const product = await Products.find({productName:{$regex: productName, $options: 'i'}});
     if(product){
         res.status(200).json(product[0]);
     }else{
