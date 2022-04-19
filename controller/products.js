@@ -268,7 +268,7 @@ const getProductById = async (req, res) => {
 
 const getProductsByName = async (req, res) => {
     const { keyword } = req.query;
-    const products = await Products.find(({productName:{$regex: keyword, $options: 'i'}});
+    const products = await Products.find({productName:{$regex: keyword, $options: 'i'}});
     if(products){
         res.status(200).json(products);
     }else{
