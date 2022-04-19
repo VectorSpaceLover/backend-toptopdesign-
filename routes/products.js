@@ -9,6 +9,7 @@ const {
     createNewProduct,
     getProductById,
     getProductByName,
+    getProductsByName,
     deleteProductById,
     deleteProducts,
     addLikedProduct,
@@ -26,6 +27,7 @@ const {
 
 router.get('/', getProducts);
 router.get('/detail', getProductById);
+router.get('/byname', getProductsByName);
 router.get('/search', searchProducts);
 router.get('/category/search', getSearchResultsByCategory);
 router.get('/yearly', getYearlyProducts);

@@ -52,7 +52,8 @@ const searchProducts = async (req, res) => {
 
 const getSearchResultsByCategory = async (req, res) => {
     const { category } = req.query;
-    const searchResults = await Products.find({category:{$regex: category, $options: 'i'}});
+    const param = JSON.parse(category);
+    const searchResults = await Products.find({category: param});
     if(searchResults){
         res.status(200).json(searchResults);
     }else{
@@ -72,7 +73,7 @@ const createNewProduct = async (req, res) => {
         description,
         imageList,
         type: 'web',
-        liked: false,
+        liked: 0,
         viewed: false,
     })
 
@@ -257,11 +258,21 @@ const uploadProductImage = async(req, res) => {
 
 const getProductById = async (req, res) => {
     const { id } = req.query;
-    const product = await Products.find({_id: id});
+    const product = await Products.findById(id);
     if(product){
-        res.status(200).json(product[0]);
+        res.status(200).json(product);
     }else{
         res.status(404).send({ message: 'something error' })
+    }
+}
+
+const getProductsByName = async (req, res) => {
+    const { keyword } = req.query;
+    const products = await Products.find({productName: keyword});
+    if(products){
+        res.status(200).json(products);
+    }else{
+        res.status(404).json({ message: 'something error' })
     }
 }
 
@@ -307,6 +318,7 @@ module.exports = {
     getSearchResultsByCategory,
     createNewProduct,
     getProductById,
+    getProductsByName,
     getProductByName,
     deleteProductById,
     deleteProducts,
