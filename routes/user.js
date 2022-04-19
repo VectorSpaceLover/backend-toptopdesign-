@@ -21,7 +21,11 @@ const {
     getActiveUsers,
     getSuspendedUsers,
     suspendById,
-    unSuspendById
+    unSuspendById,
+    getAllUsersByUserName,
+    getNewUsersByUserName,
+    getActiveUsersByUserName,
+    getSuspendedUsersByUserName
 } = require('../controller/users');
 const { route } = require('./admin');
 router.post('/suspend', suspendById);
@@ -49,6 +53,11 @@ router.get('/manager/all', getAllCustomers);
 router.get('/new', getNewUsers);
 router.get('/active', getActiveUsers);
 router.get('/suspended', getSuspendedUsers);
+
+router.get('/byuser/all', getAllUsersByUserName);
+router.get('/byuser/new', getNewUsersByUserName);
+router.get('/byuser/active', getActiveUsersByUserName);
+router.get('/byuser/suspended', getSuspendedUsersByUserName);
 
 router.delete('/', deleteUsers);
 

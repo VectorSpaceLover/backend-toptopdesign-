@@ -617,19 +617,19 @@ const getNewUsers = async(req, res) => {
     const date = new Date();
     const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
     const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-    const users = await Users.find({createdDate: {$gte: firstDay, $lt: lastDay}});
+    const users = await Users.find({createdDate: {$gte: firstDay, $lt: lastDay}, type: 1});
     res.status(200).json(users);
 }
 
 const getActiveUsers = async (req, res) => {
-    const query = { isActive: true };
+    const query = { isActive: true, type: 1 };
     const sort = { createdDate: 1 };
     const users = await Users.find(query).sort(sort);
     res.status(200).json(users);
 }
 
 const getSuspendedUsers = async (req, res) => {
-    const query = { isActive: false };
+    const query = { isActive: false, type: 1 };
     const sort = { createdDate: 1 };
     const users = await Users.find(query).sort(sort);
     res.status(200).json(users);
@@ -660,6 +660,56 @@ const unSuspendById = async (req, res) => {
         res.status(404).json('dont exist');
     }
 }
+
+const getAllUsersByUserName = async (req, res) => {
+    const { keyword } = req.query;
+    const query = {userName: keyword};
+    const sort = { createdDate: 1 };
+    const users = await Users.find(query).sort(sort);
+    if(users && users.length > 0){
+        res.status(200).json(users);
+    }else{
+        res.status(404).json();
+    }
+}
+
+const getNewUsersByUserName = async (req, res) => {
+    const { keyword } = req.query;
+    const date = new Date();
+    const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+    const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+    const users = await Users.find({createdDate: {$gte: firstDay, $lt: lastDay}, userName: keyword, type: 1});
+    if(users && users.length > 0){
+        res.status(200).json(users);
+    }else{
+        res.status(404).json();
+    }
+}
+
+const getActiveUsersByUserName = async (req, res) => {
+    const { keyword } = req.query;
+    const query = { isActive: true, userName: keyword, type: 1 };
+    const sort = { createdDate: 1 };
+    const users = await Users.find(query).sort(sort);
+    if(users && users.length > 0){
+        res.status(200).json(users);
+    }else{
+        res.status(404).json();
+    }
+}
+
+const getSuspendedUsersByUserName = async (req, res) => {
+    const { keyword } = req.query;
+    const query = {isActive: false, userName: keyword, type: 1};
+    const sort = { createdDate: 1 };
+    const users = await Users.find(query).sort(sort);
+    if(users && users.length > 0){
+        res.status(200).json(users);
+    }else{
+        res.status(404).json();
+    }
+}
+
 module.exports = {
     getUserInfoById,
     getCustomerInfoById,
@@ -689,6 +739,10 @@ module.exports = {
     getActiveUsers,
     getSuspendedUsers,
     suspendById,
-    unSuspendById
+    unSuspendById,
+    getAllUsersByUserName,
+    getNewUsersByUserName,
+    getActiveUsersByUserName,
+    getSuspendedUsersByUserName
 };
   
