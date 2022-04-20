@@ -30,7 +30,7 @@ const productsSchema = new mongoose.Schema({
     required: false,
   },
   liked: {
-    type: Number,
+    type: Boolean,
     required: false,
   },
   viewed: {

@@ -74,7 +74,7 @@ const createNewProduct = async (req, res) => {
         imageList,
         tags,
         type: 'web',
-        liked: 0,
+        liked: false,
         viewed: false,
     })
 
@@ -107,8 +107,8 @@ const addLikedProduct = async (req, res) => {
     } = req.body;
     const existed = await Products.findById(productId);
     if(existed){
-        existed.liked= existed.liked + 1;
-        existed.save();
+        existed.liked = !existed.liked;
+        await existed.save();
         return res.send({
             status: 'ok',
             message: 'already exist',
