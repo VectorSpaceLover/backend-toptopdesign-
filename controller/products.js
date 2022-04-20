@@ -65,13 +65,14 @@ const createNewProduct = async (req, res) => {
     const {
         productInfo,
     } = req.body;
-    const { productName, category, year, description, imageList } = productInfo;
+    const { productName, category, year, description, imageList, tags } = productInfo;
     const newProduct = new Products({
         productName,
         category,
         year,
         description,
         imageList,
+        tags,
         type: 'web',
         liked: 0,
         viewed: false,
@@ -307,6 +308,7 @@ const upDateProduct = async (req, res) => {
     product.year = productInfo?.year
     product.description = productInfo?.description;
     product.imageList = productInfo?.imageList;
+    product.tags = productInfo?.tags;
 
     const savedProduct = await product.save();
     res.status(200).json(savedProduct);
