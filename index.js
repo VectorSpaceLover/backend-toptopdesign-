@@ -39,4 +39,4 @@ app.use('/api/user', userRoute);
 app.use('/api/admin', adminRoute);
 app.use('/api/visitor', VisitorRoute);
 
-app.listen(443,() => console.log("Server listening at port 443"));
+app.listen(80,() => console.log("Server listening at port 80"));
