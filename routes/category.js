@@ -6,11 +6,13 @@ const {
     getTagsById,
     addNewTagToCategory,
     updateTagToCategory,
-    deleteCategories
+    deleteCategories,
+    getAllTags
 } = require('../controller/category');
 
 router.get('/', getCategories);
 router.get('/detail', getTagsById);
+router.get('/tags/all', getAllTags);
 
 router.post('/create', addCategory);
 

@@ -37,6 +37,18 @@ const getTagsById = async (req, res) => {
     }
 }
 
+const getAllTags = async(req, res) => {
+    const all = await Categories.find({});
+    let results = [];
+    all.forEach((item) => {
+        item?.tags?.forEach((val) => {
+            if(!results.includes(val))
+                results.push(val.tagName);
+        })
+    })
+    res.status(200).json(results);
+}
+
 const addNewTagToCategory = async (req, res) => {
     const { id } = req.params;
     const {
@@ -80,5 +92,6 @@ module.exports = {
     getTagsById,
     addNewTagToCategory,
     updateTagToCategory,
-    deleteCategories
+    deleteCategories,
+    getAllTags
 };
