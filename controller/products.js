@@ -54,8 +54,7 @@ const getSearchResultsByCategory = async (req, res) => {
     const { category } = req.query;
     const all = await Products.find({});
     const searchResults = all.filter((item) => {
-        console.log(item.tags);
-        return item.tags.includes(category)
+        return item.tags[0].includes(category)
     })
     if(searchResults){
         res.status(200).json(searchResults);
