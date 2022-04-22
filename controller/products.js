@@ -52,15 +52,11 @@ const searchProducts = async (req, res) => {
 
 const getSearchResultsByCategory = async (req, res) => {
     const { category } = req.query;
-    console.log(category);
     const all = await Products.find({});
-    console.log(all);
-
     const searchResults = all.filter((item) => {
+        console.log(item.tags);
         return item.tags.includes(category)
     })
-    console.log(searchResults);
-
     if(searchResults){
         res.status(200).json(searchResults);
     }else{
