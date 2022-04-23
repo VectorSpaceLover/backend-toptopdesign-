@@ -63,6 +63,54 @@ const getSearchResultsByCategory = async (req, res) => {
     }
 }
 
+const getComplexResults = async (req, res) => {
+    const {
+        keyword,
+        pattern
+    } = req.body;
+    let results = [];
+    if(keyword === ''){
+        if(!pattern || pattern.length === 0){
+            results = await Products.find({});
+        }else{
+            const all = await Products.find({});
+            results = all.filter((item) => {
+                let bFound = false;
+                for (let ele of item.tags) {
+                    for(let pat of pattern){
+                        if (ele.includes(pat)) {
+                            bFound = true;
+                            break;
+                        }
+                    }
+                    if(bFound) break;
+                }
+                return bFound;
+            })
+        }
+    }else{
+        if(!pattern || pattern.length === 0){
+            results = await Products.find({productName:{$regex: keyword, $options: 'i'}});
+        }else{
+            const all = await Products.find({productName:{$regex: keyword, $options: 'i'}});
+            results = all.filter((item) => {
+                let bFound = false;
+                for (let ele of item.tags) {
+                    for(let pat of pattern){
+                        if (ele.includes(pat)) {
+                            bFound = true;
+                            break;
+                        }
+                    }
+                    if(bFound) break;
+                }
+                return bFound;
+            })
+        }
+    }
+    res.status(200).json(results);
+}
+
 const createNewProduct = async (req, res) => {
     const {
         productInfo,
@@ -336,6 +384,7 @@ module.exports = {
     getNewProducts,
     getAllNewProducts,
     uploadProductImage,
-    upDateProduct
+    upDateProduct,
+    getComplexResults
 };
   

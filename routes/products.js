@@ -23,6 +23,7 @@ const {
     getAllNewProducts,
     uploadProductImage,
     upDateProduct,
+    getComplexResults,
 } = require('../controller/products');
 
 router.get('/', getProducts);
@@ -43,6 +44,7 @@ router.post('/create', createNewProduct);
 router.post('/upload', uploadProductImage);
 router.post('/add/liked', addLikedProduct);
 router.post('/add/viewed', addViewedProduct);
+router.post('/complex', getComplexResults);
 
 router.delete('/:id', deleteProductById);
 router.delete('/', deleteProducts);
