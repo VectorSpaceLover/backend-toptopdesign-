@@ -73,6 +73,7 @@ const getComplexResults = async (req, res) => {
         if(!pattern || pattern.length === 0){
             results = await Products.find({});
         }else{
+
             const all = await Products.find({});
             results = all.filter((item) => {
                 let bFound = false;
